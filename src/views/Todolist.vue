@@ -1,13 +1,12 @@
 <template>
-  <div></div>
+  <v-card>qsdqsd</v-card>
 </template>
 
 <script>
-
 export default {
-  name: 'Home',
 
-  components: {
-  },
 }
 </script>
+
+<style>
+</style>

@@ -1,32 +1,53 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer" app>
+      <Navigation />
+    </v-navigation-drawer>
+
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Levelup_entreprise_client</v-toolbar-title>
+
+      <!-- App bar -->
+      <v-row>
+        <v-col cols="12" class="text-end">
+          <v-btn @click="toggleOverlayLogin = true">Sign in</v-btn>
+          <v-btn @click="toggleOverlayRegister = true" class="ml-2" color="primary">Inscription</v-btn>
+        </v-col>
+      </v-row>
+    </v-app-bar>
+
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <router-view :key="$router.fullPath"></router-view>
+          </v-col>
+        </v-row>
+      </v-container>
+      <Login
+        :toggleOverlayLogin="toggleOverlayLogin"
+        @toggleOverlayLogin="toggleOverlayLogin = false"
+      />
+      <Register
+        :toggleOverlayRegister="toggleOverlayRegister"
+        @toggleOverlayRegister="toggleOverlayRegister = false"
+      />
+    </v-main>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Navigation from "./components/layout/Navigation.vue";
+import Login from "./components/layout/overlay/Login.vue";
+import Register from "./components/layout/overlay/Register.vue";
+export default {
+  data: () => ({
+    drawer: null,
+    toggleOverlayLogin: false,
+    toggleOverlayRegister: false,
+  }),
+  components: { Navigation, Login, Register }
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+</script>
