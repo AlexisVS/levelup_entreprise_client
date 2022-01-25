@@ -38,7 +38,7 @@
                 >
                   <!-- /* -------------------------------------------------------------------------- */ -->
                   <!-- /*                                    item                                    */ -->
-                  <RegisterStepTwo @validateStepTwo="validateStepTwo" />
+                  <RegisterStepTwo :validateStepTwo="validateStepTwo" />
                   <!-- /* -------------------------------------------------------------------------- */ -->
                 </v-card>
                 <v-btn :disabled="stepUnlocked < 3" color="primary" @click="changeStep(3)">Continue</v-btn>
@@ -91,23 +91,9 @@ export default {
           this.changeStep(2)
         })
     },
-    async validateStepTwo () {
-      let endpoint = 'https://api.vatsense.com/1.0/'
-      let password = '32da0887cf5293a4ca269d318fbce467'
-      await axios({
-        method: 'get',
-        url: endpoint,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
-        auth: {
-          username: 'user',
-          password: password
-        }
-      }).then(res => {
-        console.log(res);
-      })
+    validateStepTwo () {
+      this.stepUnlocked++
+      this.changeStep(2)
       // Mot de passe du compte de l'api : BuJG2ZsQnhHSKwR
     },
     validateStepThree (formData) {
