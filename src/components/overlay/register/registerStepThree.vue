@@ -1,7 +1,7 @@
 <template>
   <v-card color="none" flat>
     <v-card-title class="mb-0 pb-0">
-      <span class="subtitle-1 ">User Profile</span>
+      <span class="subtitle-1">User Profile</span>
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -30,6 +30,9 @@
 
 <script>
 export default {
+  props: {
+    validateStepThree: { type: Function },
+  },
   data: () => ({
     passwordRules: [
       v => (!!v && v.length > 5) || 'The password must be comported minimum 5 characters',

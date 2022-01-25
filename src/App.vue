@@ -40,8 +40,8 @@
 
 <script>
 import Navigation from "./components/layout/Navigation.vue";
-import Login from "./components/layout/overlay/Login.vue";
-import Register from "./components/layout/overlay/Register.vue";
+import Login from "./components/overlay/Login.vue";
+import Register from "./components/overlay/Register.vue";
 export default {
   data: () => ({
     drawer: null,
