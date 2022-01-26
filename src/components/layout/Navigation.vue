@@ -29,6 +29,11 @@ export default {
         link: '/todolist',
         icon: 'mdi-note-check',
       },
+        {
+          text: 'Messenger',
+          link: '/messenger',
+          icon:'mdi-message',
+        },
       // {
       //   text: '',
       //   link: '',

@@ -7,6 +7,8 @@ import vuetify from './plugins/vuetify'
 Vue.config.productionTip = false
 window.axios = require('axios');
 window.axios.defaults.baseURL = 'http://127.0.0.1:8000'
+window.axios.defaults.headers['Access-Control-Allow-Credentials'] = true
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 window.axios.defaults.withCredentials = true
 
 new Vue({

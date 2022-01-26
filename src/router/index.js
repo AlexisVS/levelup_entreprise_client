@@ -12,6 +12,10 @@ const routes = [
     path: '/todolist',
     component: () => import(/* webpackChunkName: "Todolist" */ '../views/Todolist.vue')
   },
+  {
+    path: '/messenger',
+    component: () => import(/* webpackChunkName: "Messenger" */ '../views/Messenger.vue')
+  },
 ]
 
 const router = new VueRouter({

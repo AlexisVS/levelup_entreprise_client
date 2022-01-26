@@ -1,20 +1,21 @@
 <template>
-  <v-list-item two-line style="width: min-content">
-    <v-list-item-avatar class="mr-2">
-      <v-avatar>
-        <img :src="'http://localhost:8000/images/' + profile.profile.picture_path" />
-      </v-avatar>
-    </v-list-item-avatar>
+  <v-list-item style="width: min-content">
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           plain
           :color="$vuetify.theme.dark ? 'white' : 'black'"
-          class="px-2"
+          class="pr-10 pl-2 mr-0"
           dark
           v-bind="attrs"
           v-on="on"
-        >{{ profile.profile.first_name + ' ' + profile.profile.last_name }}</v-btn>
+        >
+
+          <v-avatar size="44%" class="pl-5 pr-0">
+            <img :src="require('@/assets/logo.svg')" />
+          </v-avatar>
+          {{ profile.contact.name }}
+        </v-btn>
       </template>
       <v-list>
         <v-list-item @click="logout" dense>
@@ -41,13 +42,16 @@ export default {
   },
   data: () => ({}),
   methods: {
-    async logout () {
-      await axios.post("http://127.0.0.1:8000/api/logout")
+    logout () {
+      axios.get("/api/v1/logout", {
+        headers: {
+          Authorization: localStorage.getItem('bearerToken')
+        }
+      })
         .then(res => console.log(res))
         .catch(err => console.log(err));
+      localStorage.clear()
       this.$emit('logoutSuccess', false)
-      this.$router.push('/')
-      localStorage.removeItem('bearerToken')
     },
   }
 
