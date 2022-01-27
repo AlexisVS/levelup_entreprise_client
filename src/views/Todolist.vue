@@ -2,66 +2,82 @@
   <v-container>
     <v-row>
       <v-col cols="12" md="6" class="mx-auto">
-        <v-list
-      flat
-      subheader
-      three-line
-    >
-      <v-subheader>General</v-subheader>
+        <div class="d-flex justify-space-between">
+          <h1 class="mb-5">Todolist</h1>
+          <!-- <v-btn class="mr-2" @click="toggleAddTodoOverlay = true">Add todo</v-btn> -->
+        </div>
+        <v-list v-if="todos && todos.length > 0" flat subheader three-line>
+          <v-row>
+            <v-col class="d-flex justify-between px-4">
+              <v-spacer></v-spacer>
+            </v-col>
+          </v-row>
 
-      <v-list-item-group
-        v-model="settings"
-        multiple
-        active-class=""
-      >
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active"></v-checkbox>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>Notifications</v-list-item-title>
-              <v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active"></v-checkbox>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>Sound</v-list-item-title>
-              <v-list-item-subtitle>Auto-update apps at any time. Data charges may apply</v-list-item-subtitle>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-
-        <v-list-item>
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active"></v-checkbox>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>Auto-add widgets</v-list-item-title>
-              <v-list-item-subtitle>Automatically add home screen widgets when downloads complete</v-list-item-subtitle>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
+          <v-list-item-group multiple active-class>
+            <!-- Content -->
+            <Todo
+              :todoDone="todoDone"
+              v-for="item in todos"
+              :key="'todo-item-' + item.id"
+              :todo="item"
+            />
+          </v-list-item-group>
+        </v-list>
+        <h2 v-else>You does'nt have todo registered</h2>
       </v-col>
     </v-row>
+    <!-- <AddTodo
+      :toggleAddTodoOverlay="toggleAddTodoOverlay"
+      @toggleAddTodoOverlay="toggleAddTodoOverlay = false"
+      :addTodo="addTodo"
+    />-->
   </v-container>
 </template>
 
 <script>
+import axios from 'axios'
+import Todo from "../components/todo.vue";
+// import AddTodo from '../components/overlay/addTodo.vue';
 export default {
-
+  data: () => ({
+    todos: null,
+    // toggleAddTodoOverlay: false,
+  }),
+  methods: {
+    getTodo () {
+      axios.get('/api/v1/todos', {
+        headers: {
+          Authorization: localStorage.getItem('bearerToken')
+        }
+      })
+        .then(res => { console.log(res); this.todos = res.data.data.todos })
+    },
+    // addTodo (text) {
+    //   let formData = new FormData();
+    //   formData.append('text', text)
+    //   axios.post('/api/v1/todos', formData, {
+    //     headers: {
+    //       Authorization: localStorage.getItem('bearerToken')
+    //     }
+    //   })
+    //     .then(res => { console.log(res); this.getTodo() })
+    // },
+    todoDone (todoId) {
+      axios.get(`/api/v1/todos/${todoId}/done`, {
+        headers: {
+          Authorization: localStorage.getItem('bearerToken')
+        }
+      })
+        .then(res => { console.log(res); this.getTodo() })
+    },
+  },
+  mounted () {
+    this.getTodo()
+  },
+  components: {
+    Todo,
+    // AddTodo 
+  }
 }
 </script>
 
