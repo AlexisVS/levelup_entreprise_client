@@ -8,7 +8,8 @@
       <div
         class="message"
         :class="message.author_messsage_user_id == message.user_id ? 'message--user' : 'message--admin'"
-      >{{ message.message }}</div>
+        v-html="message.message"
+      ></div>
     </v-col>
   </v-row>
 </template>
@@ -24,10 +25,11 @@ export default {
 <style scoped>
 .message {
   max-width: 70%;
-  padding: 10px 15px;
+  padding: 10px 25px;
   margin: 10px 0;
   font-size: 0.9rem;
 }
+
 
 .message--admin {
   border-top-right-radius: 9999px;
