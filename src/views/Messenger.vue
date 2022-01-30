@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import Echo from 'laravel-echo'
 import axios from 'axios';
 import Message from '../components/message.vue';
 import AddMessage from '../components/addMessage.vue';
@@ -46,6 +47,11 @@ export default {
   components: { Message, AddMessage },
   mounted () {
     this.getMessages()
+  },
+  created () {
+    let userId = localStorage.getItem('bearerToken')[7]
+    Echo.channel('messages.' + userId)
+      .listen('SendMessageEvent', e => console.log(['brodcast bjr', e]));
   }
 }
 </script>

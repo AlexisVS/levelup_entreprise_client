@@ -15,5 +15,17 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+
+      var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
+        cluster: 'eu'
+      });
+  
+      var channel = pusher.subscribe('messages.' + localStorage.getItem('bearerToken')[7]);
+      channel.bind('SendMessageEvent', function(data) {
+        console.log([ 'brodcast ok',data]);
+      });
+  
+    </script>
   </body>
 </html>

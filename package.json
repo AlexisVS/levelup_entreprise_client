@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
+    "pusher": "^5.0.1",
     "soap": "^0.43.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
@@ -26,6 +27,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "laravel-echo": "^1.11.3",
+    "pusher-js": "^7.0.4",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.4.5",
