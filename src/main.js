@@ -18,6 +18,17 @@ new Vue({
   router,
   store,
   vuetify,
+  created() {
+    this.pusher = new Pusher('13c1d8f7e9b85177c5f7', {
+      cluster: 'eu'
+    });
+    this.pusherChannel = this.pusher.subscribe('messages.'+ window.localStorage.getItem('bearerToken')[7]);
+
+    this.pusherChannel.bind('.SendMessageEvent', function(data) {
+      console.log(['bonjour broadcast', data]);
+      // app.messages.push(JSON.stringify(data));
+    });
+  },
   data: {
     messages: [],
   },
@@ -32,10 +43,12 @@ var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
 });
 
 var channel = pusher.subscribe('messages.'+ window.localStorage.getItem('bearerToken')[7]);
-channel.bind('SendMessageEvent', function(data) {
+channel.bind('.SendMessageEvent', function(data) {
   console.log(['bonjour broadcast', data]);
   // app.messages.push(JSON.stringify(data));
 });
+
+window.Pusher = require('pusher-js');
 
 import Echo from 'laravel-echo';
 
