@@ -23,6 +23,7 @@ import AddMessage from '../components/addMessage.vue';
 export default {
   data: () => ({
     messages: null,
+    socket: null
   }),
   methods: {
     getMessages () {
@@ -47,9 +48,12 @@ export default {
   components: { Message, AddMessage },
   mounted () {
     this.getMessages()
-    let userId = localStorage.getItem('bearerToken')[7]
-    Window.Echo.channel('messages.' + userId)
-      .listen('.SendMessageEvent', e => console.log(['brodcast bjr', e]));
+    // let userId = localStorage.getItem('userId')
+    // Window.Echo.channel('messages.' + userId)
+    //   .listen('.SendMessageEvent', e => console.log(['brodcast bjr', e]));
+    // let userId = localStorage.getItem('userId')
+    window.Echo.channel('messages')
+      .listen('SendMessageEvent', e => { console.log(['brodcast bjr', JSON.parse(e)]); this.socket = e });
   },
   created () {
   }

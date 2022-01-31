@@ -1,10 +1,10 @@
+import Pusher from 'pusher-js'
+import Echo from 'laravel-echo';
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import Pusher from 'pusher-js'
-
 
 Vue.config.productionTip = false
 window.axios = require('axios');
@@ -13,54 +13,32 @@ window.axios.defaults.headers['Access-Control-Allow-Credentials'] = true
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 window.axios.defaults.withCredentials = true
 
-
-new Vue({
-  router,
-  store,
-  vuetify,
-  created() {
-    this.pusher = new Pusher('13c1d8f7e9b85177c5f7', {
-      cluster: 'eu'
-    });
-    this.pusherChannel = this.pusher.subscribe('messages.'+ window.localStorage.getItem('bearerToken')[7]);
-
-    this.pusherChannel.bind('.SendMessageEvent', function(data) {
-      console.log(['bonjour broadcast', data]);
-      // app.messages.push(JSON.stringify(data));
-    });
-  },
-  data: {
-    messages: [],
-  },
-  render: h => h(App)
-}).$mount('#app')
-
-
-// Pusher.logToConsole = true;
-
-var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
-  cluster: 'eu'
-});
-
-var channel = pusher.subscribe('messages.'+ window.localStorage.getItem('bearerToken')[7]);
-channel.bind('.SendMessageEvent', function(data) {
-  console.log(['bonjour broadcast', data]);
-  // app.messages.push(JSON.stringify(data));
-});
-
+Pusher.logToConsole = true;
 window.Pusher = require('pusher-js');
-
-import Echo from 'laravel-echo';
 
 const client = require('pusher-js');
 
-window.Echo = new Echo({
+  var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
+    cluster: 'eu'
+  });
+  
+  var channel = pusher.subscribe('messages');
+  channel.bind(`SendMessageEvent`, function() {
+    // console.log(['bonjour broadcast', data]);
+    // app.messages.push(JSON.stringify(data));
+  });
+  
+  window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '13c1d8f7e9b85177c5f7',
+    cluster: 'eu',
     client: client
-});
+  });
 
-
-
-
+  new Vue({
+  router,
+  store,
+  vuetify,
+  render: h => h(App)
+}).$mount('#app')
 

@@ -38,7 +38,10 @@
                 >
                   <!-- /* -------------------------------------------------------------------------- */ -->
                   <!-- /*                                    item                                    */ -->
-                  <RegisterStepTwo :validateStepTwo="validateStepTwo" @validateStepTwo="validateStepTwo"/>
+                  <RegisterStepTwo
+                    :validateStepTwo="validateStepTwo"
+                    @validateStepTwo="validateStepTwo"
+                  />
                   <!-- /* -------------------------------------------------------------------------- */ -->
                 </v-card>
                 <v-btn :disabled="stepUnlocked < 3" color="primary" @click="changeStep(3)">Continue</v-btn>
@@ -46,10 +49,18 @@
               </v-stepper-content>
 
               <v-stepper-content step="3">
-                <v-card flat class="mb-12" color="none" :height="$vuetify.breakpoint.mdAndUp ? '300px' : '350px'">
+                <v-card
+                  flat
+                  class="mb-12"
+                  color="none"
+                  :height="$vuetify.breakpoint.mdAndUp ? '300px' : '350px'"
+                >
                   <!-- /* -------------------------------------------------------------------------- */ -->
                   <!-- /*                                    item                                    */ -->
-                  <RegisterStepThree :validateStepThree="validateStepThree" @validateStepThree="validateStepThree" />
+                  <RegisterStepThree
+                    :validateStepThree="validateStepThree"
+                    @validateStepThree="validateStepThree"
+                  />
                   <!-- /* -------------------------------------------------------------------------- */ -->
                 </v-card>
                 <v-btn text @click="$emit('toggleOverlayRegister', false)">Cancel</v-btn>
@@ -93,9 +104,9 @@ export default {
         localStorage.setItem('bearerToken', 'Bearer ' + res.data.data.bearerToken)
       })
       // }).then(() => {
-        // axios.get('/sanctum/csrf-cookie').then(() => {
-          // axios.post('/api/v1/login', formData).then(res => {
-            //   console.log(res);
+      // axios.get('/sanctum/csrf-cookie').then(() => {
+      // axios.post('/api/v1/login', formData).then(res => {
+      //   console.log(res);
       //   localStorage.setItem('bearerToken', 'Bearer ' + res.data.data.bearerToken)
       // })
       // })
@@ -103,17 +114,18 @@ export default {
     },
     validateStepTwo (formData) {
       // axios.get('/sanctum/csrf-cookie').then(() => {
-        axios.post('/api/v1/register/validate-step-two', formData, {
-          headers: {
-            Authorization: localStorage.getItem('bearerToken')
-          }
+      axios.post('/api/v1/register/validate-step-two', formData, {
+        headers: {
+          Authorization: localStorage.getItem('bearerToken')
+        }
+      })
+        .then(res => {
+          console.log('bonjour');
+          console.log(['register', res]);
+          this.stepUnlocked++;
+          this.changeStep(3);
+          localStorage.setItem('userId', res.data.data.user.id)
         })
-          .then(res => {
-            console.log('bonjour');
-            console.log(res);
-            this.stepUnlocked++;
-            this.changeStep(3);
-          })
       // })
       // Mot de passe du compte de l'api : BuJG2ZsQnhHSKwR
     },
@@ -122,7 +134,7 @@ export default {
         headers: {
           Authorization: localStorage.getItem('bearerToken')
         }
-      }).then( res => {
+      }).then(res => {
         console.log(res);
         this.$emit('toggleOverlayRegister', false)
         this.$emit('registrationComplete', false)

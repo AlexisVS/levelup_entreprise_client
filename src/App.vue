@@ -84,7 +84,7 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => { this.profile = res.data.data; console.log(res); })
+        .then(res => { this.profile = res.data.data; console.log(res); localStorage.setItem('userId', res.data.data.user.id) })
     }
   },
   components: { Navigation, Login, Register, Profile, EditProfile },
