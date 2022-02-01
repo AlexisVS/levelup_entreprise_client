@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 window.axios = require('axios');
@@ -38,6 +39,33 @@ window.Pusher = require('pusher-js');
     forceTLS: false,
     disableStats: true,
   });
+
+  window.EchoMessageNotification = new Echo({
+    broadcaster: 'pusher',
+    key: '13c1d8f7e9b85177c5f7',
+    cluster: 'eu',
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    wssPort: 6001,
+    forceTLS: false,
+    disableStats: true,
+    authorizer: (channel) => { // options in parameter
+      return {
+          authorize: (socketId, callback) => {
+              axios.post('/broadcasting/auth', {
+                  socket_id: socketId,
+                  channel_name: channel.name
+              })
+              .then(response => {
+                  callback(false, response.data);
+              })
+              .catch(error => {
+                  callback(true, error);
+              });
+          }
+      };
+  },
+  })
 
   new Vue({
   router,

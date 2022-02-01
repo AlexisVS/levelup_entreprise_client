@@ -61,6 +61,7 @@
 </template>
 
 <script>
+// import Echo from 'laravel-echo'
 import axios from 'axios'
 import Navigation from "./components/layout/Navigation.vue";
 import Login from "./components/overlay/Login.vue";
@@ -92,6 +93,17 @@ export default {
     if (localStorage.getItem('bearerToken')) {
       this.getProfile()
       this.isConnected = true
+      window.Echo
+      .channel('notifications.messages')
+      .listen('MessageReceived', e => {
+        console.log(["sqfdsqdqdsd", e]);
+
+        window.Echo.private('App.Models.User.' + localStorage.getItem('userId'))
+    .notification((notification) => {
+        console.log(notification.type);
+    });
+      });
+
     }
   }
 }
