@@ -16,7 +16,7 @@ window.axios.defaults.withCredentials = true
 Pusher.logToConsole = true;
 window.Pusher = require('pusher-js');
 
-const client = require('pusher-js');
+// const client = require('pusher-js');
 
   var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
     cluster: 'eu'
@@ -32,7 +32,11 @@ const client = require('pusher-js');
     broadcaster: 'pusher',
     key: '13c1d8f7e9b85177c5f7',
     cluster: 'eu',
-    client: client
+    // client: client,
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    forceTLS: false,
+    disableStats: true,
   });
 
   new Vue({

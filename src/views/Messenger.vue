@@ -53,7 +53,9 @@ export default {
     //   .listen('.SendMessageEvent', e => console.log(['brodcast bjr', e]));
     // let userId = localStorage.getItem('userId')
     window.Echo.channel('messages')
-      .listen('SendMessageEvent', e => { console.log(['brodcast bjr', JSON.parse(e)]); this.socket = e });
+      .listen('SendMessageEvent', e => {
+        this.messages = [...this.messages, e.data.message];
+      });
   },
   created () {
   }
