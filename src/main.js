@@ -18,15 +18,15 @@ window.Pusher = require('pusher-js');
 
 // const client = require('pusher-js');
 
-  var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
-    cluster: 'eu'
-  });
+  // var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
+  //   cluster: 'eu'
+  // });
   
-  var channel = pusher.subscribe('messages');
-  channel.bind(`SendMessageEvent`, function() {
-    // console.log(['bonjour broadcast', data]);
-    // app.messages.push(JSON.stringify(data));
-  });
+  // var channel = pusher.subscribe('messages');
+  // channel.bind(`SendMessageEvent`, function() {
+  //   // console.log(['bonjour broadcast', data]);
+  //   // app.messages.push(JSON.stringify(data));
+  // });
   
   window.Echo = new Echo({
     broadcaster: 'pusher',

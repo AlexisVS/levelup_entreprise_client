@@ -52,9 +52,11 @@ export default {
     // Window.Echo.channel('messages.' + userId)
     //   .listen('.SendMessageEvent', e => console.log(['brodcast bjr', e]));
     // let userId = localStorage.getItem('userId')
+        console.log('dsfdfdsfsdfdf');
     window.Echo.channel('messages')
       .listen('SendMessageEvent', e => {
         this.messages = [...this.messages, e.data.message];
+        console.log('dsfdfdsfsdfdf');
       });
   },
   created () {
