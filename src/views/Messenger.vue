@@ -32,7 +32,7 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => { console.log(res); this.messages = res.data.data.messages; });
+        .then(res => { this.messages = res.data.data.messages; });
     },
     sendMessage (message) {
       let formData = new FormData();
@@ -48,15 +48,9 @@ export default {
   components: { Message, AddMessage },
   mounted () {
     this.getMessages()
-    // let userId = localStorage.getItem('userId')
-    // Window.Echo.channel('messages.' + userId)
-    //   .listen('.SendMessageEvent', e => console.log(['brodcast bjr', e]));
-    // let userId = localStorage.getItem('userId')
-        console.log('dsfdfdsfsdfdf');
     window.Echo.channel('messages')
       .listen('SendMessageEvent', e => {
         this.messages = [...this.messages, e.data.message];
-        console.log('dsfdfdsfsdfdf');
       });
   },
   created () {

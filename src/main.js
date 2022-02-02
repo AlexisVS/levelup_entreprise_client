@@ -14,7 +14,7 @@ window.axios.defaults.headers['Access-Control-Allow-Credentials'] = true
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 window.axios.defaults.withCredentials = true
 
-Pusher.logToConsole = true;
+Pusher.logToConsole = false;
 window.Pusher = require('pusher-js');
 
 // const client = require('pusher-js');
@@ -29,18 +29,18 @@ window.Pusher = require('pusher-js');
   //   // app.messages.push(JSON.stringify(data));
   // });
   
-  window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '13c1d8f7e9b85177c5f7',
-    cluster: 'eu',
-    // client: client,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    forceTLS: false,
-    disableStats: true,
-  });
+  // window.Echo = new Echo({
+  //   broadcaster: 'pusher',
+  //   key: '13c1d8f7e9b85177c5f7',
+  //   cluster: 'eu',
+  //   // client: client,
+  //   wsHost: window.location.hostname,
+  //   wsPort: 6001,
+  //   forceTLS: false,
+  //   disableStats: true,
+  // });
 
-  window.EchoMessageNotification = new Echo({
+  window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '13c1d8f7e9b85177c5f7',
     cluster: 'eu',
@@ -48,23 +48,50 @@ window.Pusher = require('pusher-js');
     wsPort: 6001,
     wssPort: 6001,
     forceTLS: false,
-    disableStats: true,
-    authorizer: (channel) => { // options in parameter
+    enableStats: false,
+    authEndpoint: '/api/broadcasting/auth',
+    authorizer: (channel) => { // param: options
       return {
-          authorize: (socketId, callback) => {
-              axios.post('/broadcasting/auth', {
-                  socket_id: socketId,
-                  channel_name: channel.name
-              })
-              .then(response => {
-                  callback(false, response.data);
-              })
-              .catch(error => {
-                  callback(true, error);
-              });
-          }
+        authorize: (socketId, callback) => {
+          // axios.get('/sanctum/csrf-cookie').then(() => {
+          axios
+            .post(`/api/broadcasting/auth`, {
+              socket_id: socketId,
+              channel_name: channel.name,
+            },
+            { 
+              headers: {
+              'Authorization': window.localStorage.getItem('bearerToken'),
+              // 'X-CSRF-Token': window.document.cookie.slice(11)
+              }
+              }
+            )
+            .then((response) => {
+              callback(false, response.data);
+            })
+            .catch((error) => {
+              callback(true, error);
+            });
+          // })
+        },
       };
-  },
+    },
+  //   authorizer: (channel) => { // options in parameter
+  //     return {
+  //         authorize: (socketId, callback) => {
+  //             axios.post('/broadcasting/auth', {
+  //                 socket_id: socketId,
+  //                 channel_name: channel.name
+  //             })
+  //             .then(response => {
+  //                 callback(false, response.data);
+  //             })
+  //             .catch(error => {
+  //                 callback(true, error);
+  //             });
+  //         }
+  //     };
+  // },
   })
 
   new Vue({

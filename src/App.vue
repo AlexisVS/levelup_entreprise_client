@@ -40,9 +40,21 @@
           </v-col>
         </v-row>
       </v-container>
+      <div
+        v-if="notifications"
+        class="d-flex flex-column"
+        style="position: fixed; top: 10px; right: 10px; z-index: 9999999;"
+      >
+        <Notifications
+          v-for="item in notifications"
+          :key="`notification-${item.id}-${item.message}`"
+          :message="item"
+        />
+      </div>
       <Login
         :toggleOverlayLogin="toggleOverlayLogin"
         @toggleOverlayLogin="toggleOverlayLogin = false"
+        @loginSuccess="getProfile()"
       />
       <Register
         :toggleOverlayRegister="toggleOverlayRegister"
@@ -68,6 +80,7 @@ import Login from "./components/overlay/Login.vue";
 import Register from "./components/overlay/Register.vue";
 import Profile from "./components/Profile.vue";
 import EditProfile from './components/overlay/EditProfile.vue';
+import Notifications from './components/Notifications.vue';
 export default {
   name: "App",
   data: () => ({
@@ -77,6 +90,7 @@ export default {
     toggleOverlayRegister: false,
     toggleOverlayEditProfile: false,
     profile: null,
+    notifications: null,
   }),
   methods: {
     getProfile () {
@@ -85,25 +99,28 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => { this.profile = res.data.data; console.log(res); localStorage.setItem('userId', res.data.data.user.id) })
+        .then(res => { this.profile = res.data.data; localStorage.setItem('userId', res.data.data.user.id) })
+    },
+    getNotifications () {
+      window.Echo.private('App.Models.User.' + localStorage.getItem('userId'))
+        .listen('MessageReceivedEvent', (e) => {
+          // console.log('MESSAGE RECEIVED NOTIFICATION');
+          // console.log(e);
+          this.notifications
+            ? this.notifications = [...this.notifications, e.message]
+            : this.notifications = [e.message]
+        });
+    },
+    destroyNotification (notificationId) {
+      this.notifications.filter(e => e.id != notificationId)
     }
   },
-  components: { Navigation, Login, Register, Profile, EditProfile },
+  components: { Navigation, Login, Register, Profile, EditProfile, Notifications },
   mounted () {
     if (localStorage.getItem('bearerToken')) {
       this.getProfile()
       this.isConnected = true
-      window.Echo
-      .channel('notifications.messages')
-      .listen('MessageReceived', e => {
-        console.log(["sqfdsqdqdsd", e]);
-
-        window.Echo.private('App.Models.User.' + localStorage.getItem('userId'))
-    .notification((notification) => {
-        console.log(notification.type);
-    });
-      });
-
+      this.getNotifications();
     }
   }
 }
