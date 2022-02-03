@@ -105,10 +105,28 @@ export default {
       window.Echo.private('App.Models.User.' + localStorage.getItem('userId'))
         .listen('MessageReceivedEvent', (e) => {
           // console.log('MESSAGE RECEIVED NOTIFICATION');
-          // console.log(e);
-          this.notifications
-            ? this.notifications = [...this.notifications, e.message]
-            : this.notifications = [e.message]
+          console.log(e);
+          if (this.notifications) {
+            if (this.notifications.find(el => el.id == e.data.id) != {}) {
+              this.notifications = [...this.notifications, e.data]
+            }
+          }
+          else {
+            this.notifications = [e.data]
+          }
+        })
+        .listen('TodoReceivedEvent', (e) => {
+          console.log(['todoEVENT', e.data]);
+          console.log(e);
+          console.log(e);
+          if (this.notifications) {
+            if (this.notifications.find(el => el.id == e.id) != {}) {
+              this.notifications = [...this.notifications, e]
+            }
+          }
+          else {
+            this.notifications = [e.data]
+          }
         });
     },
     destroyNotification (notificationId) {

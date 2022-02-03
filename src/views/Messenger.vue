@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-container>
+        <v-container style="max-height: 450px; overflow-y: scroll">
           <Message v-for="item in messages" :key="'message-id-' + item.id" :message="item" />
         </v-container>
       </v-col>

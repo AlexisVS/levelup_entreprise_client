@@ -8,23 +8,23 @@
     elevation="9"
     icon="mdi-account"
     type="success"
-    v-text="'You have received a new message from userId:' + message.user_id + ' msg: ' + message.message"
+    v-text="message.message == null ? 'You have received a new todo task' : 'Your have received a new message'"
   ></v-alert>
 </template>
 
 <script>
 export default {
   props: {
-    message: {type: Object},
+    message: { type: Object },
   },
-data: () => ({
-  displayed: true,
-}),
-created () {
-  setTimeout(() => {
-    this.displayed = false
-  }, 3000);
-}
+  data: () => ({
+    displayed: true,
+  }),
+  created () {
+    setTimeout(() => {
+      this.displayed = false
+    }, 3000);
+  }
 }
 </script>
 

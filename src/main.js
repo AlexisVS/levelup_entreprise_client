@@ -14,7 +14,7 @@ window.axios.defaults.headers['Access-Control-Allow-Credentials'] = true
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 window.axios.defaults.withCredentials = true
 
-Pusher.logToConsole = false;
+Pusher.logToConsole = true;
 window.Pusher = require('pusher-js');
 
 // const client = require('pusher-js');
