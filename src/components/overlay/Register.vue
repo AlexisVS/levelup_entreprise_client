@@ -138,6 +138,7 @@ export default {
         console.log(res);
         this.$emit('toggleOverlayRegister', false)
         this.$emit('registrationComplete', false)
+        location.reload();
       })
     },
   },

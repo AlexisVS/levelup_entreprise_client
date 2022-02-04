@@ -32,7 +32,9 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => { this.messages = res.data.data.messages; });
+        .then(res => {
+          this.messages = [...new Set(res.data.data.messages)]
+        });
     },
     sendMessage (message) {
       let formData = new FormData();
@@ -42,19 +44,21 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => { console.log(res); this.getMessages(); });
+        .then(() => { this.getMessages(); });
     },
   },
   components: { Message, AddMessage },
-  mounted () {
+  created () {
     this.getMessages()
+  },
+  mounted () {
     window.Echo.channel('messages')
       .listen('SendMessageEvent', e => {
-        this.messages = [...this.messages, e.data.message];
+        if (this.messages.find(el => el.id == e.data.message.id) != Object) {
+          this.messages = [...new Set([...this.messages, e.data.message])];
+        }
       });
   },
-  created () {
-  }
 }
 </script>
 
