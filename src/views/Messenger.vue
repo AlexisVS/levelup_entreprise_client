@@ -2,14 +2,19 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-container style="max-height: 450px; overflow-y: scroll">
+        <v-container
+          :style="$vuetify.breakpoint.smAndUp == true ? 'width:580px' : null"
+          style="height: 450px; overflow-y: scroll"
+        >
           <Message v-for="item in messages" :key="'message-id-' + item.id" :message="item" />
         </v-container>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <AddMessage :sendMessage="sendMessage" />
+        <v-container :style="$vuetify.breakpoint.smAndUp == true ? 'width:580px' : null">
+          <v-row>
+            <v-col cols="12">
+              <AddMessage :sendMessage="sendMessage" />
+            </v-col>
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
@@ -44,14 +49,14 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        // .then(() => {
-        //   this.messages = [...this.messages, {
-        //     id: this.messages.length  + 1,
-        //     message: message,
-        //     user_id: localStorage.getItem('userId'),
-        //     author_messsage_user_id: localStorage.getItem('userId')
-        //   }]
-        // });
+      // .then(() => {
+      //   this.messages = [...this.messages, {
+      //     id: this.messages.length  + 1,
+      //     message: message,
+      //     user_id: localStorage.getItem('userId'),
+      //     author_messsage_user_id: localStorage.getItem('userId')
+      //   }]
+      // });
     },
   },
   components: { Message, AddMessage },

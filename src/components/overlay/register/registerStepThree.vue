@@ -6,10 +6,10 @@
     <v-card-text>
       <v-container>
         <v-row>
-          <v-col cols="12">
+          <v-col cols="12" class="py-0">
             <v-text-field label="Name" v-model="contactName" required :rules="contactNameRules"></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" class="py-0">
             <v-text-field
               label="Email"
               v-model="contactEmail"
@@ -18,7 +18,7 @@
               :rules="contactEmailRules"
             ></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" class="py-0">
             <v-text-field
               label="Phone number"
               v-model="contactPhone"
@@ -26,7 +26,7 @@
               :rules="contactPhoneRules"
             ></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" class="py-0">
             <v-btn @click="validate" color="success">Register</v-btn>
           </v-col>
         </v-row>

@@ -123,7 +123,7 @@ export default {
           console.log('bonjour');
           console.log(['register', res]);
           this.stepUnlocked++;
-          this.changeStep(3);
+          // this.changeStep(3);
           localStorage.setItem('userId', res.data.data.user.id)
         })
       // })

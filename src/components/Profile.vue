@@ -11,8 +11,8 @@
           v-on="on"
         >
 
-          <v-avatar size="44%" class="pl-5 pr-0">
-            <img :src="require('@/assets/logo.svg')" />
+          <v-avatar size="30px" class="pl-5 pr-0">
+            <img class="pl-1 pr-2 mr-3" :src="require('@/assets/logo.svg')" />
           </v-avatar>
           {{ profile.contact.name }}
         </v-btn>
@@ -52,6 +52,7 @@ export default {
         .catch(err => console.log(err));
       localStorage.clear()
       this.$emit('logoutSuccess', false)
+      this.$router.push('/');
     },
   }
 
