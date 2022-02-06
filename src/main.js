@@ -17,29 +17,6 @@ window.axios.defaults.withCredentials = true
 Pusher.logToConsole = true;
 window.Pusher = require('pusher-js');
 
-// const client = require('pusher-js');
-
-  // var pusher = new Pusher('13c1d8f7e9b85177c5f7', {
-  //   cluster: 'eu'
-  // });
-  
-  // var channel = pusher.subscribe('messages');
-  // channel.bind(`SendMessageEvent`, function() {
-  //   // console.log(['bonjour broadcast', data]);
-  //   // app.messages.push(JSON.stringify(data));
-  // });
-  
-  // window.Echo = new Echo({
-  //   broadcaster: 'pusher',
-  //   key: '13c1d8f7e9b85177c5f7',
-  //   cluster: 'eu',
-  //   // client: client,
-  //   wsHost: window.location.hostname,
-  //   wsPort: 6001,
-  //   forceTLS: false,
-  //   disableStats: true,
-  // });
-
   window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '13c1d8f7e9b85177c5f7',
@@ -53,7 +30,6 @@ window.Pusher = require('pusher-js');
     authorizer: (channel) => { // param: options
       return {
         authorize: (socketId, callback) => {
-          // axios.get('/sanctum/csrf-cookie').then(() => {
           axios
             .post(`/api/broadcasting/auth`, {
               socket_id: socketId,
@@ -62,7 +38,6 @@ window.Pusher = require('pusher-js');
             { 
               headers: {
               'Authorization': window.localStorage.getItem('bearerToken'),
-              // 'X-CSRF-Token': window.document.cookie.slice(11)
               }
               }
             )
@@ -72,26 +47,9 @@ window.Pusher = require('pusher-js');
             .catch((error) => {
               callback(true, error);
             });
-          // })
         },
       };
     },
-  //   authorizer: (channel) => { // options in parameter
-  //     return {
-  //         authorize: (socketId, callback) => {
-  //             axios.post('/broadcasting/auth', {
-  //                 socket_id: socketId,
-  //                 channel_name: channel.name
-  //             })
-  //             .then(response => {
-  //                 callback(false, response.data);
-  //             })
-  //             .catch(error => {
-  //                 callback(true, error);
-  //             });
-  //         }
-  //     };
-  // },
   })
 
   new Vue({
