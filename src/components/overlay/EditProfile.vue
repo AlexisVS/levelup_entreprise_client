@@ -95,10 +95,10 @@ export default {
           headers: {
             Authorization: localStorage.getItem('bearerToken')
           }
-        }).then(res => console.log(res))
+        })
       this.$refs.form.validate();
-      // this.$refs.form.reset();
       this.$emit('editProfileSuccess', false);
+      this.$refs.form.reset();
     },
   },
 }

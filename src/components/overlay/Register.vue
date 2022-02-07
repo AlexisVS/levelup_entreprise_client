@@ -95,7 +95,6 @@ export default {
     },
     validateStepOne (formData) {
       axios.post('/api/v1/register/validate-step-one', formData).then(res => {
-        console.log(res);
         this.stepUnlocked++
         this.changeStep(2)
         localStorage.setItem('bearerToken', 'Bearer ' + res.data.data.bearerToken)
@@ -108,8 +107,6 @@ export default {
         }
       })
         .then(res => {
-          console.log('bonjour');
-          console.log(['register', res]);
           this.stepUnlocked++;
           localStorage.setItem('userId', res.data.data.user.id)
         })
@@ -120,8 +117,7 @@ export default {
         headers: {
           Authorization: localStorage.getItem('bearerToken')
         }
-      }).then(res => {
-        console.log(res);
+      }).then(() => {
         this.$emit('toggleOverlayRegister', false)
         this.$emit('registrationComplete', false)
         location.reload();

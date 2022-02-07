@@ -42,7 +42,7 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => { console.log(res); this.todos = res.data.data.todos })
+        .then(res => { this.todos = res.data.data.todos })
     },
     todoDone (todoId) {
       axios.get(`/api/v1/todos/${todoId}/done`, {
@@ -50,7 +50,7 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => { console.log(res); this.getTodo() })
+        .then(() => { this.getTodo() })
     },
   },
   mounted () {

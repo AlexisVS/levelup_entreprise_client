@@ -74,7 +74,6 @@ export default {
   }),
   methods: {
     validate () {
-  
           /* -------------------------------------------------------------------------- */
           this.entrepriseActivities = 'food'
           this.city = 'Bruxelles'

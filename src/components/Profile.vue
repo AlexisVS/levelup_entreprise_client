@@ -10,7 +10,6 @@
           v-bind="attrs"
           v-on="on"
         >
-
           <v-avatar size="30px" class="pl-5 pr-0">
             <img class="pl-1 pr-2 mr-3" :src="require('@/assets/logo.svg')" />
           </v-avatar>
@@ -48,8 +47,6 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
       localStorage.clear()
       this.$emit('logoutSuccess', false)
       this.$router.push('/');

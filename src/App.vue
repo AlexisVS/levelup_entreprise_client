@@ -103,9 +103,7 @@ export default {
     },
     getNotifications () {
       window.Echo.private('App.Models.User.' + localStorage.getItem('userId'))
-        .listen('MessageReceivedEvent', (e) => {
-          // console.log('MESSAGE RECEIVED NOTIFICATION');
-          console.log(e);
+        .listen('MessageReceivedEvent', (e) => { // ? message notification
           if (this.notifications) {
             if (this.notifications.find(el => el.id == e.data.id) != {}) {
               this.notifications = [...this.notifications, e.data]
@@ -115,10 +113,7 @@ export default {
             this.notifications = [e.data]
           }
         })
-        .listen('TodoReceivedEvent', (e) => {
-          console.log(['todoEVENT', e.data]);
-          console.log(e);
-          console.log(e);
+        .listen('TodoReceivedEvent', (e) => { // ? todo notification
           if (this.notifications) {
             if (this.notifications.find(el => el.id == e.id) != {}) {
               this.notifications = [...this.notifications, e]
@@ -135,6 +130,8 @@ export default {
   },
   components: { Navigation, Login, Register, Profile, EditProfile, Notifications },
   mounted () {
+    // If the user has a bearerToken 
+    // Load their profile and launch the Notification system
     if (localStorage.getItem('bearerToken')) {
       this.getProfile()
       this.isConnected = true
