@@ -32,11 +32,6 @@
         </v-row>
       </v-container>
     </v-card-text>
-    <!-- <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="$emit('toggleOverlayRegister', false)">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="$emit('toggleOverlayRegister', false)">Save</v-btn>
-    </v-card-actions>-->
   </v-card>
 </template>
 

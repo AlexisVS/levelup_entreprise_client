@@ -64,7 +64,6 @@
                   <!-- /* -------------------------------------------------------------------------- */ -->
                 </v-card>
                 <v-btn text @click="$emit('toggleOverlayRegister', false)">Cancel</v-btn>
-                <!-- <v-btn color="primary" @click="$emit('toggleOverlayRegister', false)">Complete</v-btn> -->
               </v-stepper-content>
             </v-stepper-items>
           </v-stepper>
@@ -95,25 +94,14 @@ export default {
       }
     },
     validateStepOne (formData) {
-      // axios.get('/sanctum/csrf-cookie').then((response) => {
-      //   console.log(response);
       axios.post('/api/v1/register/validate-step-one', formData).then(res => {
         console.log(res);
         this.stepUnlocked++
         this.changeStep(2)
         localStorage.setItem('bearerToken', 'Bearer ' + res.data.data.bearerToken)
       })
-      // }).then(() => {
-      // axios.get('/sanctum/csrf-cookie').then(() => {
-      // axios.post('/api/v1/login', formData).then(res => {
-      //   console.log(res);
-      //   localStorage.setItem('bearerToken', 'Bearer ' + res.data.data.bearerToken)
-      // })
-      // })
-      // })
     },
     validateStepTwo (formData) {
-      // axios.get('/sanctum/csrf-cookie').then(() => {
       axios.post('/api/v1/register/validate-step-two', formData, {
         headers: {
           Authorization: localStorage.getItem('bearerToken')
@@ -123,10 +111,8 @@ export default {
           console.log('bonjour');
           console.log(['register', res]);
           this.stepUnlocked++;
-          // this.changeStep(3);
           localStorage.setItem('userId', res.data.data.user.id)
         })
-      // })
       // Mot de passe du compte de l'api : BuJG2ZsQnhHSKwR
     },
     validateStepThree (formData) {

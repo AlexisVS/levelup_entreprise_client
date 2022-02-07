@@ -4,7 +4,6 @@
       <v-col cols="12" md="6" class="mx-auto">
         <div class="d-flex justify-space-between">
           <h1 class="mb-5">Todolist</h1>
-          <!-- <v-btn class="mr-2" @click="toggleAddTodoOverlay = true">Add todo</v-btn> -->
         </div>
         <v-list v-if="todos && todos.length > 0" flat subheader three-line>
           <v-row>
@@ -26,22 +25,15 @@
         <h2 v-else>You does'nt have todo registered</h2>
       </v-col>
     </v-row>
-    <!-- <AddTodo
-      :toggleAddTodoOverlay="toggleAddTodoOverlay"
-      @toggleAddTodoOverlay="toggleAddTodoOverlay = false"
-      :addTodo="addTodo"
-    />-->
   </v-container>
 </template>
 
 <script>
 import axios from 'axios'
 import Todo from "../components/todo.vue";
-// import AddTodo from '../components/overlay/addTodo.vue';
 export default {
   data: () => ({
     todos: null,
-    // toggleAddTodoOverlay: false,
   }),
   methods: {
     getTodo () {
@@ -52,16 +44,6 @@ export default {
       })
         .then(res => { console.log(res); this.todos = res.data.data.todos })
     },
-    // addTodo (text) {
-    //   let formData = new FormData();
-    //   formData.append('text', text)
-    //   axios.post('/api/v1/todos', formData, {
-    //     headers: {
-    //       Authorization: localStorage.getItem('bearerToken')
-    //     }
-    //   })
-    //     .then(res => { console.log(res); this.getTodo() })
-    // },
     todoDone (todoId) {
       axios.get(`/api/v1/todos/${todoId}/done`, {
         headers: {
@@ -76,7 +58,6 @@ export default {
   },
   components: {
     Todo,
-    // AddTodo 
   }
 }
 </script>

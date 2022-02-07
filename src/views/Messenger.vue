@@ -49,14 +49,6 @@ export default {
           Authorization: localStorage.getItem('bearerToken')
         }
       })
-      // .then(() => {
-      //   this.messages = [...this.messages, {
-      //     id: this.messages.length  + 1,
-      //     message: message,
-      //     user_id: localStorage.getItem('userId'),
-      //     author_messsage_user_id: localStorage.getItem('userId')
-      //   }]
-      // });
     },
   },
   components: { Message, AddMessage },

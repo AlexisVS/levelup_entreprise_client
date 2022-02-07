@@ -1,8 +1,5 @@
 <template>
   <v-card color="none" flat>
-    <!-- <v-card-title class="my-0 py-0">
-      <span class="subtitle-1 my-0 py-0">TVA</span>
-    </v-card-title>-->
     <v-card-text>
       <v-container>
         <v-row class="mb-7 mt-0 pt-0">
@@ -53,11 +50,6 @@
         </v-row>
       </v-container>
     </v-card-text>
-    <!-- <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="$emit('toggleOverlayRegister', false)">Close</v-btn>
-          <v-btn color="blue darken-1" text @click="$emit('toggleOverlayRegister', false)">Save</v-btn>
-    </v-card-actions>-->
   </v-card>
 </template>
 
@@ -82,20 +74,14 @@ export default {
   }),
   methods: {
     validate () {
-      // axios.get('http://www.apilayer.net/api/validate?access_key=b4542632227f20fe0a3de0623f5316a3&vat_number=' + this.tva + '&format=1',
-      //   { withCredentials: false, }
-      // )
-      //   .then((res) => {
-      //     this.entrepriseName = res.data.company_name;
-      //     this.address = res.data.company_address;
-      //     this.country = res.data.country_code;
+  
           /* -------------------------------------------------------------------------- */
           this.entrepriseActivities = 'food'
           this.city = 'Bruxelles'
           this.phone = '0032485654121'
           this.zip = '1000'
 
-          /* --------------------------------------------a retirer pour l'api------------------------------ */
+          /* -----------------------------  Pour auto fill le formulaire  ------------- */
           this.entrepriseName = 'sdfsdfsdf'
           this.address = 'sdfsdfsdf'
           this.country = 'sdfsdfsdfds'
@@ -110,7 +96,6 @@ export default {
           formData.append('phone', this.phone)
           formData.append('zip_code', this.zip)
           this.$emit('validateStepTwo',formData)
-        // })
     }
   },
   computed: {
