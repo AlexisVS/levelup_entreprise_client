@@ -54,7 +54,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 export default {
   props: {
     validateStepTwo: { type: Function },
@@ -74,18 +74,20 @@ export default {
   }),
   methods: {
     validate () {
+      axios.get('http://www.apilayer.net/api/validate?access_key=b4542632227f20fe0a3de0623f5316a3&vat_number=' + this.tva + '&format=1',
+        { withCredentials: false, }
+      )
+        .then((res) => {
+          console.log(['sdqfsdfsdf', res]);
+          this.entrepriseName = res.data.company_name;
+          this.address = res.data.company_address;
+          this.country = res.data.country_code;
           /* -------------------------------------------------------------------------- */
           this.entrepriseActivities = 'food'
           this.city = 'Bruxelles'
           this.phone = '0032485654121'
           this.zip = '1000'
-
-          /* -----------------------------  Pour auto fill le formulaire  ------------- */
-          this.entrepriseName = 'sdfsdfsdf'
-          this.address = 'sdfsdfsdf'
-          this.country = 'sdfsdfsdfds'
-          /* -------------------------------------------------------------------------- */
-
+          /* --------------------------------------------a retirer pour l'api------------------------------ */
           let formData = new FormData
           formData.append('name', this.entrepriseName)
           formData.append('activity', this.entrepriseActivities)
@@ -94,7 +96,8 @@ export default {
           formData.append('country', this.country)
           formData.append('phone', this.phone)
           formData.append('zip_code', this.zip)
-          this.$emit('validateStepTwo',formData)
+          this.$emit('validateStepTwo', formData)
+        })
     }
   },
   computed: {
