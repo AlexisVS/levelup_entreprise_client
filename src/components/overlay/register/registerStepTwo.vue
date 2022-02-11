@@ -75,19 +75,28 @@ export default {
   methods: {
     validate () {
       axios.get('http://www.apilayer.net/api/validate?access_key=b4542632227f20fe0a3de0623f5316a3&vat_number=' + this.tva + '&format=1',
-        { withCredentials: false, }
+        {
+          withCredentials: false,
+        }
       )
         .then((res) => {
           console.log(['sdqfsdfsdf', res]);
-          this.entrepriseName = res.data.company_name;
-          this.address = res.data.company_address;
-          this.country = res.data.country_code;
+          /* -----------  Pour auto fill le formulaire si l'API a encore bug ---------- */
+          this.entrepriseName = 'sdfsdfsdf'
+          this.address = 'sdfsdfsdf'
+          this.country = 'sdfsdfsdfds'
+          /* -------------------------------------------------------------------------- */
+          if (/* si cette api ne bug pas ... */ res != null) {
+            this.entrepriseName = res.data.company_name;
+            this.address = res.data.company_address;
+            this.country = res.data.country_code;
+          }
           /* -------------------------------------------------------------------------- */
           this.entrepriseActivities = 'food'
           this.city = 'Bruxelles'
           this.phone = '0032485654121'
           this.zip = '1000'
-          /* --------------------------------------------a retirer pour l'api------------------------------ */
+          /* -------------------------------------------------------------------------- */
           let formData = new FormData
           formData.append('name', this.entrepriseName)
           formData.append('activity', this.entrepriseActivities)
